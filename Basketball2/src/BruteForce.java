@@ -3,42 +3,6 @@ import java.io.*;
 
 public class BruteForce {
 
-	public static void readData() throws NumberFormatException, IOException {
-		System.out.println("starting read data");
-		ArrayList<ArrayList<Integer>> guards = new ArrayList<ArrayList<Integer>>();
-		ArrayList<ArrayList<Integer>> forwards = new ArrayList<ArrayList<Integer>>();
-		File forwardFile = new File ("F.csv");
-		BufferedReader brf = new BufferedReader(new FileReader(forwardFile));
-		String st;
-		String line;
-		while ((st = brf.readLine()) != null){
-			line = brf.readLine(); 
-			for (int j=0 ; j<5 ; j++) {
-				ArrayList<Integer> playerStatF = new ArrayList<Integer>();
-				for (int i=0 ; i<line.split(",").length ; i++) {
-					playerStatF.add(Integer.parseInt(line.split(",")[i]));
-				}
-				forwards.add(playerStatF);
-			}
-		}
-		
-		File guardsFile = new File ("G.csv");
-		BufferedReader brg = new BufferedReader(new FileReader(guardsFile));
-		while ((st = brg.readLine()) != null) {
-			line = brg.readLine();
-			for (int x=0 ; x<5 ; x++) {
-				ArrayList<Integer> playerStatG = new ArrayList<Integer>();
-				for (int y=0 ; y<line.split(",").length ; y++) {
-					playerStatG.add(Integer.parseInt(line.split(",")[y]));
-				}
-				guards.add(playerStatG);
-			}
-		}
-		
-		System.out.println(forwards);
-		System.out.println(guards);
-	}
-	
 	public static String bruteForceClassification (ArrayList<double[]> savedStatsF, ArrayList<double[]> savedStatsG, double[] inputStats) {
 		//savedStatsF = arraylist of all of the Player object double[] stats for forwards
 		//savedStatsG = arraylist of all of the Player object double[] stats for guards
@@ -73,6 +37,9 @@ public class BruteForce {
 		rpgG = rpgG/savedStatsG.size();
 		ftpG = ftpG/savedStatsG.size();
 		tppG = tppG/savedStatsG.size();
+		
+		System.out.println("Guard averages "+" "+ppgG+" "+rpgG+" "+ftpG+" "+tppG);
+		System.out.println("Forward averages "+ppgF+" "+rpgF+" "+ftpF+" "+tppF);
 		
 		//see which position the input stats are closest to for each category
 		String ppgEval;
@@ -148,8 +115,6 @@ public class BruteForce {
 		}
 		else {
 			return "Forward";
-		}
-		
+		}	
 	}
-
 }

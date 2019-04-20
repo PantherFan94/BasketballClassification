@@ -13,22 +13,10 @@ public class LVQ {
 	public LVQ(ArrayList<Player> td,ArrayList<Player> cbv,ArrayList<Player> testData) {
 		trainingData = td;
 		this.testData = testData;
-		ArrayList<Player> all = new ArrayList<Player>();
-		all.addAll(trainingData);
-		all.addAll(this.testData);
-		ArrayList<Player> allNormalized = normalize(all);
-		for(int i = 0; i<trainingData.size();i++) {
-			trainingData.set(i, allNormalized.get(i));
-		}
-		for(int i = trainingData.size(); i<all.size();i++) {
-			this.testData.set(i-trainingData.size(), allNormalized.get(i));
-		}
 		codeBookVects = cbv;
-		
-		for(Player p: trainingData) {
-		}
-		
 	}
+		
+	
 	public ArrayList<Player> getTestData(){
 		return this.testData;
 	}
@@ -59,16 +47,9 @@ public class LVQ {
 		}
 		return data;
 	}
-	public void unNormalize(ArrayList<Player> data) {
-		double x = 0;
-		for(Player p:data) {
-			for(int i = 0; i<p.getStats().length;i++) {
-				x = (p.getStats()[i]*(max[i]-min[i])) + min[i];
-				p.setStats(i, x);
-			}
-		}
+
 		
-	}
+	
 	public ArrayList<Player> getCodeBook(){
 		return codeBookVects;
 	}

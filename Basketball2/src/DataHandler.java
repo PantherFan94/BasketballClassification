@@ -14,10 +14,17 @@ private ArrayList<Player> normalizedData;
 private double[] min = {100,100,100,100};
 private double[] max = {0,0,0,0};
 
-public DataHandler(ArrayList<Player> cbv,ArrayList<Player> td) {
+public DataHandler(ArrayList<Player> td) {
 	File g = new File("G.csv");
 	File f = new File("F.csv");
-	codeBookVectors = cbv;
+	double[] cbvG = {.6,.3,.8,.35};
+	double[] cbvF = {.5,.7,.7,.3};
+	Player guard = new Player(cbvG,"G");
+	Player foward = new Player(cbvF,"F");
+	codeBookVectors = new ArrayList<Player>();
+	codeBookVectors.add(guard);
+	codeBookVectors.add(foward);
+	players = new ArrayList<Player>();
 	guards = readData(g);
 	fowards = readData(f);
 	players.addAll(guards);
@@ -25,8 +32,12 @@ public DataHandler(ArrayList<Player> cbv,ArrayList<Player> td) {
 	players.addAll(td);
 	normalizedData = normalize(players);
 	trainingData = new ArrayList<Player>();
+	testData = new ArrayList<Player>();
 	for(int i =0; i<guards.size()+fowards.size();i++) {
 		trainingData.add(players.get(i));
+	}
+	for(int i = guards.size()+fowards.size(); i<players.size();i++) {
+		testData.add(players.get(i));
 	}
 }
 public static ArrayList<Player> readData(File file) {
@@ -114,7 +125,17 @@ public void unNormalize(ArrayList<Player> data) {
 	}
 	
 }
+public ArrayList<Player> getNormalized() {
+	return normalizedData;
+}
 public ArrayList<Player> getCodeBook(){
 	return codeBookVectors;
 }
+public ArrayList<Player> getTestData(){
+	return testData;
+}
+public ArrayList<Player> getTrainingData(){
+	return trainingData;
+}
+
 }
